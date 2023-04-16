@@ -22,7 +22,9 @@ public class PartyFunction {
             return;
         }
         int partyID = generatePartyID();
-        PartyImpl party = new PartyImpl(partyID, title, context, leader, new ArrayList<>());
+        String formattedTitle = title.replace("_", " ");
+        String formattedContext = context.replace("_", " ");
+        PartyImpl party = new PartyImpl(partyID, formattedTitle, formattedContext, leader, new ArrayList<>());
         Map<Integer, PartyImpl> partyMap = new HashMap<>();
         partyMap.put(partyID, party);
         partyData.addParty(partyMap);
@@ -37,25 +39,11 @@ public class PartyFunction {
         }
         return false;
     }
-
-    public void deleteParty(Player leader) {
-        Map<Integer, PartyImpl> parties = partyData.getParty();
-        for (PartyImpl party : parties.values()) {
-            if (party.getLeader().equals(leader)) {
-                parties.remove(party.getPartyID());
-                for (Player member : party.getMembers()) {
-                    member.sendMessage("파티가 해체되었습니다.");
-                }
-                return;
-            }
-        }
-    }
-
     public void removeParty(Player player) {
         Map<Integer, PartyImpl> parties = partyData.getParty();
         for (PartyImpl party : parties.values()) {
             if (party.getLeader().equals(player)) {
-                if (party.getMembers().size() > 1) {
+                if (party.getMembers().size() >= 1) {
                     Player newLeader = party.getMembers().get(0);
                     party.setLeader(newLeader);
                     party.removeMember(newLeader);
@@ -63,11 +51,13 @@ public class PartyFunction {
                     for (Player member : party.getMembers()) {
                         member.sendMessage(newLeader.getName() + "님이 새로운 파티장이 되었습니다.");
                     }
+                    player.sendMessage(newLeader.getName() + "님이 새로운 파티장이 되었습니다.");
                 } else {
                     parties.remove(party.getPartyID());
                     for (Player member : party.getMembers()) {
                         member.sendMessage("파티가 삭제되었습니다.");
                     }
+                    player.sendMessage("파티가 삭제되었습니다.");
                 }
                 break;
             }
@@ -87,6 +77,7 @@ public class PartyFunction {
                 for (Player member : party.getMembers()) {
                     member.sendMessage(target.getName() + "님이 파티에서 추방되었습니다.");
                 }
+                party.getLeader().sendMessage(target.getName() + "님이 파티에서 추방되었습니다.");
                 parties.put(party.getPartyID(), party);
                 return;
             }

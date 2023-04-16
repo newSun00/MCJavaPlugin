@@ -7,10 +7,10 @@ import java.util.List;
 
 public class PartyImpl implements Party {
     private final int partyID;
-    private String title;
-    private String context;
+    private final String title;
+    private final String context;
     private Player leader;
-    private List<Player> members;
+    private final List<Player> members;
     public PartyImpl(int partyID, String title, String context, Player leader, List<Player> members) {
         this.partyID = partyID;
         this.title = title;
@@ -78,16 +78,6 @@ public class PartyImpl implements Party {
     }
 
     @Override
-    public void setTitle(String title) {
-
-    }
-
-    @Override
-    public void setContext(String context) {
-
-    }
-
-    @Override
     public void addMember(Player player) {
         if (members.size() >= 4) return;
 
@@ -105,11 +95,11 @@ public class PartyImpl implements Party {
 
     @Override
     public void removeMember(Player player) {
-
+        members.remove(player);
     }
 
     @Override
     public void setLeader(Player player) {
-
+        leader = player;
     }
 }

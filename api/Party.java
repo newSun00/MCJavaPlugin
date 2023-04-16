@@ -41,10 +41,6 @@ public interface Party {
         // 파티원 목록 반환
         List<Player> getMembers();
 
-        void setTitle(String title);
-
-        void setContext(String context);
-
         void addMember(Player player);
 
         void removeMember(Player player);

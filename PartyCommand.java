@@ -20,8 +20,7 @@ public class PartyCommand implements CommandExecutor{
             Player p = (Player) sender;
             if ( args.length == 0) showDefaultMsg(p);
             if ( args.length == 1) {
-                if ( args[0].equals("삭제")) partyFunction.deleteParty(p);
-                else if ( args[0].equals("탈퇴")) partyFunction.removeParty(p);
+                if ( args[0].equals("탈퇴")) partyFunction.removeParty(p);
                 else if ( args[0].equals("목록")) partyFunction.partyList(p);
             }
             if ( args.length == 2) {
@@ -38,7 +37,6 @@ public class PartyCommand implements CommandExecutor{
         player.sendMessage(" ");
         player.sendMessage(" Party [ Beta 0.0.1 ] ");
         player.sendMessage(" /파티 생성 <Title> <Content> ");
-        player.sendMessage(" /파티 삭제");
         player.sendMessage(" /파티 탈퇴");
         player.sendMessage(" /파티 강퇴 <Player> ");
         player.sendMessage(" /파티 목록 - 파티 가입은 목록에서 해주세요.");
